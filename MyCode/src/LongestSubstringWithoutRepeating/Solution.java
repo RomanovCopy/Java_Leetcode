@@ -1,26 +1,31 @@
 package LongestSubstringWithoutRepeating;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Solution {
 
-    public Solution(){
-        lengthOfLongestSubstring("abcdeffghijklmnopqrstuvwxyzz");
+    public Solution() {
+        lengthOfLongestSubstring("abcdeffedcba");
     }
 
     public int lengthOfLongestSubstring(String s) {
-        int length=0;
-        List<String> substrings=new ArrayList<>();
-        for(int i=0;i<s.length();i++){
-            char ch=s.charAt(i);
-
+        int n = s.length();
+        int maxLength = 0;
+        Set<Character> charSet = new HashSet<>();
+        int left = 0;
+        for (int right = 0; right < n; right++) {
+            if (!charSet.contains(s.charAt(right))) {
+                charSet.add(s.charAt(right));
+                maxLength = Math.max(maxLength, right - left + 1);
+            } else {
+                while (charSet.contains(s.charAt(right))) {
+                    charSet.remove(s.charAt(left));
+                    left++;
+                }
+                charSet.add(s.charAt(right));
+            }
         }
-
-        System.out.println("Найдены подстроки: ");
-        for(String str:substrings){
-            length=str.length()>length?str.length():length;
-        }
-        return length;
+        return maxLength;
     }
 }
