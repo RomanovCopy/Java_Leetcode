@@ -7,28 +7,60 @@ import java.util.Scanner;
 
 public class Solution {
 
-    List<Character>numbers;
 
     public Solution() {
-        numbers = new ArrayList<>(Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7',
-                '8', '9', '-'));
         Scanner scanner=new Scanner(System.in);
         String line=scanner.nextLine();
         System.out.println(myAtoi(line));
     }
 
     public int myAtoi(String s) {
-        int max=(int)Math.pow(2, 32);
-        int min=max*-1;
+        s=s.trim();
+        List<Character>numbers=new ArrayList<>
+                (Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'));
+        int max=Integer.MAX_VALUE;
+        int min=Integer.MIN_VALUE;
+        int start=0;
+        boolean isPos=true;
+        try{
+            if(s.charAt(0)=='+'||s.charAt(0)=='-'){
+                start+=1;
+                isPos=s.charAt(0)!='-';
+            }
+        }catch (IndexOutOfBoundsException e){
+            return 0;
+        }
         StringBuilder sb = new StringBuilder();
-        for(int i=0;i<s.length();i++){
+        for(int i=start;i<s.length();i++){
             var c=s.charAt(i);
             if(numbers.contains(c)){
                 sb.append(c);
+                var temp=Long.parseLong(sb.toString());
+                temp*=isPos?1:-1;
+                if(temp>max){
+                    return max;
+                }
+                else if(temp<min) {
+                    return min;
+                }
+            }else{
+                break;
             }
         }
-        String str = sb.toString();
-        return Integer.parseInt(str);
+        long res=0;
+        try{
+            String str = sb.toString();
+            res=Long.parseLong(str);
+        }catch (NumberFormatException e){
+                res=0;
+        }
+        if (res > max || res<min) {
+            res=isPos?max:min;
+        }
+        if(!isPos){
+            res*=-1;
+        }
+        return (int)res;
     }
 
 
