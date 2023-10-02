@@ -7,14 +7,21 @@ package regularExpressionMatching;
  * '*' Соответствует нулю или более предшествующим элементам.
  * Сопоставление должно охватывать всю входную строку (не частичное сопоставление).*/
 
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Solution {
 
     public Solution() {
 
-        String s = "aab";
-        String p = "c*a*b";
+        String s = "romanov";
+        String p = "*v";
         boolean result = isMatch(s, p);
-        System.out.println("Сопоставление: " + result);
+        Pattern pattern=Pattern.compile(p);
+        Matcher matcher=pattern.matcher(s);
+        System.out.println("Сопоставление: " + result+" "+(matcher.find()?
+                matcher.group():"") );
 
     }
 
