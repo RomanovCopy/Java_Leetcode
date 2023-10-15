@@ -19,7 +19,10 @@ public class Solution {
 
     public Solution() {
 
-        int[] height = createArray(4);
+        int[] height = createArray(3);
+//        height=new int[] {1,8,6,2,5,4,8,3,7};
+        height=new int[] {1,2,1};
+
         System.out.println(maxArea(height));
     }
 
@@ -30,7 +33,7 @@ public class Solution {
             max=length>0?height[0]*1:max;
             return max;
         }
-        int[][]points=new int[height.length][2];
+        int[][]points=new int[length][2];
         for(int i=0;i<height.length;i++){
             points[i][0]=i;
             points[i][1]=height[i];
@@ -39,14 +42,17 @@ public class Solution {
         pointList.sort(Comparator.comparingInt(point -> -point[1]));
         points = pointList.toArray(new int[pointList.size()][]);
         int temp=0;
+        int l=0;
         int []point=points[0];
-        for(int i= 1;i<length;i++){
-            if(point[1]>points[i][1]){
-                temp=Math.abs(points[i][1]*(point[0]-points[i][0]));
-            }else {
-                temp=Math.abs(point[1]*(point[0]-points[i][0]));
-            }
+        for(int i= 0;i<length;i++){
+//            if(point[1]>points[i][1]){
+                l=Math.abs(point[0]-points[i][0]);
+                temp=points[i][1]*l;
+//            }else {
+//                temp=Math.abs(point[1]*(point[0]-points[i][0]));
+//            }
             max=temp>max?temp:max;
+//            point=points[i];
         }
         return max;
     }
