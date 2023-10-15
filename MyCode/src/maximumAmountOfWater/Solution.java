@@ -1,9 +1,6 @@
 package maximumAmountOfWater;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Вам дан целочисленный массив height длиной n. Нарисованы n вертикальных линий так,
@@ -19,17 +16,38 @@ import java.util.Random;
 
 public class Solution {
 
-    private int[] height;
 
     public Solution() {
 
-        height = createArray(10);
+        int[] height = createArray(4);
         System.out.println(maxArea(height));
     }
 
     public int maxArea(int[] height) {
-        int max = 0;
-        
+        int max=0;
+        int length= height.length;
+        if(length<2){
+            max=length>0?height[0]*1:max;
+            return max;
+        }
+        int[][]points=new int[height.length][2];
+        for(int i=0;i<height.length;i++){
+            points[i][0]=i;
+            points[i][1]=height[i];
+        }
+        List<int[]> pointList = Arrays.asList(points);
+        pointList.sort(Comparator.comparingInt(point -> -point[1]));
+        points = pointList.toArray(new int[pointList.size()][]);
+        int temp=0;
+        int []point=points[0];
+        for(int i= 1;i<length;i++){
+            if(point[1]>points[i][1]){
+                temp=Math.abs(points[i][1]*(point[0]-points[i][0]));
+            }else {
+                temp=Math.abs(point[1]*(point[0]-points[i][0]));
+            }
+            max=temp>max?temp:max;
+        }
         return max;
     }
 
