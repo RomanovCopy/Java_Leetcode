@@ -19,68 +19,41 @@ public class Solution {
 
     public Solution() {
 
-        int[] height = createArray(3);
+        int[] height = createArray(1000);
 //        height=new int[] {1,8,6,2,5,4,8,3,7};
-        height=new int[] {1,2,1};
+//        height=new int[] {1,2,1};
 
         System.out.println(maxArea(height));
     }
 
-    public int maxArea(int[] height) {
-        int max=0;
-        int length= height.length;
-        if(length<2){
-            max=length>0?height[0]*1:max;
-            return max;
-        }
-        int[][]points=new int[length][2];
-        for(int i=0;i<height.length;i++){
-            points[i][0]=i;
-            points[i][1]=height[i];
-        }
-        List<int[]> pointList = Arrays.asList(points);
-        pointList.sort(Comparator.comparingInt(point -> -point[1]));
-        points = pointList.toArray(new int[pointList.size()][]);
-        int temp=0;
-        int l=0;
-        int []point=points[0];
-        for(int i= 0;i<length;i++){
-//            if(point[1]>points[i][1]){
-                l=Math.abs(point[0]-points[i][0]);
-                temp=points[i][1]*l;
-//            }else {
-//                temp=Math.abs(point[1]*(point[0]-points[i][0]));
-//            }
-            max=temp>max?temp:max;
-//            point=points[i];
-        }
-        return max;
-    }
 
     public int[]createArray(int size){
         List<Integer>list=new ArrayList<>();
         Random random=new Random();
         for(int i=0;i<size;i++){
-            list.add(random.nextInt(1,25));
+            list.add(random.nextInt(1,1000));
         }
         return Arrays.stream(list.toArray(new Integer[list.size()])).mapToInt(Integer::intValue).toArray();
     }
 
 
-//    public int maxArea(int[] height) {
-//        int max = 0;
-//        int temp=0;
-//        int length= height.length;
-//        for(int i=0;i<length;i++){
-//            for(int j=0;j<length;j++){
-//                temp=height[i]<=height[j]?
-//                        height[i]*Math.abs(i-j):
-//                        height[j]*Math.abs(i-j);
-//                max=temp>max?temp:max;
-//            }
-//        }
-//        return max;
-//    }
+    public int maxArea(int[] height) {
+        int left = 0;
+        int right = height.length - 1;
+        int maxArea = 0;
+
+        while (left < right) {
+            int currentArea = Math.min(height[left], height[right]) * (right - left);
+            maxArea = Math.max(maxArea, currentArea);
+
+            if (height[left] < height[right]) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+        return maxArea;
+    }
 
 
 }
