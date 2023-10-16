@@ -38,34 +38,64 @@ public class Solution {
         for(int i=0;i<multiPliers.length;i++){
             numbers.put(multiPliers[i],roomNumbers[i]);
         }
-        System.out.println(intToRoman(90));
+        System.out.println(intToRoman(910));
     }
 
     public String intToRoman(int num) {
-        String roman="";
-        int temp=num;
-        int val=0;
-        for(int i=multiPliers.length-1;i>=0;i--){
-            val=temp/multiPliers[i];
-            if(val>0){
-                roman+=numberToString(val,multiPliers[i]);
-                temp-=multiPliers[i]*val;
+        String roman = "";
+        if (num > 10) {
+            int firstMax = -1;
+            int index=0;
+            int diff = 0;
+            for (int i = 0; i < multiPliers.length; i++) {
+                if ((diff = num - multiPliers[i]) < 0) {
+                    firstMax = multiPliers[i];
+                    index=i;
+                    break;
+                } else if (diff==0) {
+                    return roomNumbers[i];
+                }
             }
+            if (firstMax > 0) {
+                if(firstMax==1000){
+                    if(diff>100){
+                        roman=roomNumbers[index-1];
+                    }else {
+                        roman=roomNumbers[index];
+                    }
+                } else if (firstMax==500) {
+                    if(diff>100){
+                        roman=roomNumbers[index-1];
+                    }else {
+                        roman=roomNumbers[index];
+                    }
+                } else if (firstMax==100) {
+                    if(diff>10){
+                        roman=roomNumbers[index-1];
+                    }else {
+                        roman=roomNumbers[index];
+                    }
+                }else {
+                    if(diff>10){
+                        roman=roomNumbers[index-1];
+                    }else {
+                        roman=roomNumbers[index];
+                    }
+                }
+            }else {
+
+            }
+
+        } else if (num==0) {
+            roman="\nВ римской нумерации число 0 не имеет своего собственного символа \n" +
+                    "или представления, так как римляне не использовали ноль в своей \n" +
+                    "системе численности. \n";
+        } else {
+            roman = roomNumbers[num - 1];
         }
         return roman;
     }
 
-    private String numberToString(int number, int multiplier){
-        String val="";
-        int index=Arrays.binarySearch(multiPliers, multiplier);
-        while (number>0){
-            val+=numbers.get(multiplier);
-            number--;
-        }
-        if(index==3||index==8){
-            val="I"+roomNumbers[index+1];
-        }
-        return val;
-    }
+
 
 }
