@@ -19,8 +19,8 @@ public class Solution {
 
     public Solution() {
 
-        int[] height = createArray(1000);
-//        height=new int[] {1,8,6,2,5,4,8,3,7};
+        int[] height = createArray(100);
+        height=new int[] {1,8,6,2,5,4,8,3,7};
 //        height=new int[] {1,2,1};
 
         System.out.println(maxArea(height));
@@ -40,19 +40,19 @@ public class Solution {
     public int maxArea(int[] height) {
         int left = 0;
         int right = height.length - 1;
-        int maxArea = 0;
+        int max = 0;
+        int area=0;
 
         while (left < right) {
-            int currentArea = Math.min(height[left], height[right]) * (right - left);
-            maxArea = Math.max(maxArea, currentArea);
-
-            if (height[left] < height[right]) {
+            area = Math.min(height[left], height[right]) * (right - left);
+            max = Math.max(max, area);
+            if(height[left] < height[right]){
                 left++;
-            } else {
+            }else {
                 right--;
             }
         }
-        return maxArea;
+        return max;
     }
 
 
