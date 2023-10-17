@@ -28,74 +28,44 @@ import java.util.HashMap;
 
 public class Solution {
 
-    int[]multiPliers;
-    String[]roomNumbers;
-    HashMap<Integer,String>numbers;
     public Solution() {
-        multiPliers=new int[]{1,2,3,4,5,6,7,8,9,10,50,100,500,1000};
-        roomNumbers=new String[]{"I","II","III","IV","V","VI","VII","VIII","IX","X","L","C","D","M"};
-        numbers=new HashMap<>();
-        for(int i=0;i<multiPliers.length;i++){
-            numbers.put(multiPliers[i],roomNumbers[i]);
-        }
-        System.out.println(intToRoman(910));
+        System.out.println(intToRoman(3000));
     }
 
     public String intToRoman(int num) {
-        String roman = "";
-        if (num > 10) {
-            int firstMax = -1;
-            int index=0;
-            int diff = 0;
-            for (int i = 0; i < multiPliers.length; i++) {
-                if ((diff = num - multiPliers[i]) < 0) {
-                    firstMax = multiPliers[i];
-                    index=i;
-                    break;
-                } else if (diff==0) {
-                    return roomNumbers[i];
-                }
-            }
-            if (firstMax > 0) {
-                if(firstMax==1000){
-                    if(diff>100){
-                        roman=roomNumbers[index-1];
-                    }else {
-                        roman=roomNumbers[index];
-                    }
-                } else if (firstMax==500) {
-                    if(diff>100){
-                        roman=roomNumbers[index-1];
-                    }else {
-                        roman=roomNumbers[index];
-                    }
-                } else if (firstMax==100) {
-                    if(diff>10){
-                        roman=roomNumbers[index-1];
-                    }else {
-                        roman=roomNumbers[index];
-                    }
-                }else {
-                    if(diff>10){
-                        roman=roomNumbers[index-1];
-                    }else {
-                        roman=roomNumbers[index];
-                    }
-                }
-            }else {
-
-            }
-
-        } else if (num==0) {
-            roman="\nВ римской нумерации число 0 не имеет своего собственного символа \n" +
-                    "или представления, так как римляне не использовали ноль в своей \n" +
-                    "системе численности. \n";
-        } else {
-            roman = roomNumbers[num - 1];
+        String[][]roomNumbers=new String[][]{
+                {"I","II","III","IV","V","VI","VII","VIII","IX","X"},
+                {"X","XX","XXX","XL","L","LX","LXX","LXXX","XC","C"},
+                {"C","CC","CCC","CD","D","DC","DCC","DCCC","CM","M"},
+                {"M","MM","MMM"}};
+        String roman="";
+        int[] bit=new int[]{-1,-1,-1,-1};
+        int temp=num;
+        int count=0;
+        int bitness=0;//разрядность
+        while (temp>=1){
+            bit[count]=temp%10;
+            temp/=10;
+            count++;
         }
+        for (int i = 0; i < bit.length; i++) {
+            if (bit[i] >= 0) {
+                bitness++;
+            } else {
+                break;
+            }
+        }
+        count=bitness-1;
+        StringBuilder builder=new StringBuilder(roman);
+        String ch="";
+        while (count>=0){
+            if(bit[count]>0){
+                ch=roomNumbers[count][bit[count]-1];
+                builder.append(ch);
+            }
+            count--;
+        }
+        roman=builder.toString();
         return roman;
     }
-
-
-
 }
