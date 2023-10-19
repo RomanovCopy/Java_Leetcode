@@ -14,7 +14,7 @@ public class Solution {
 
     public Solution() {
 //        System.out.println(threeSum(generate(30)));
-        System.out.println(threeSum(new int[]{-1,0,1,2,-1,-4}));
+        System.out.println(threeSum(new int[]{0,3,0,1,1,-1,-5,-5,3,-3,-3,0}));
 
     }
 
@@ -24,23 +24,31 @@ public class Solution {
         List<Integer> l = new ArrayList<>();
         for (int i = 0; i < nums.length; i++) {
             for (int j = 0; j < nums.length; j++) {
-                if (i==j) continue;
+                if (i == j) continue;
                 for (int k = 0; k < nums.length; k++) {
-                    if (i==k||j==k) continue;
-                    if (i != j && i != k && j != k) {
-                        if (nums[i] + nums[j] + nums[k] == 0) {
-                            l.add(nums[i]);
-                            l.add(nums[j]);
-                            l.add(nums[k]);
-                            boolean eq=false;
-                            for(var lst:list){
-                                if(eq=l.equals(lst))
-                                    break;
+                    if (i == k || j == k) continue;
+                    if(nums[i]==-1 && nums[j]==0 && nums[k]==1)
+                        System.out.println("Es!!!");
+                    if (nums[i] + nums[j] + nums[k] == 0) {
+                        l.add(nums[i]);
+                        l.add(nums[j]);
+                        l.add(nums[k]);
+                        boolean eq = false;
+                        for (var lst : list) {
+                            for (int i1 = 0; i1 < lst.size(); i1++) {
+                                for (int i2 = 0; i2 < l.size(); i2++) {
+                                    if (lst.get(i1) == l.get(i2) && lst.get(i1) == l.get(i2)
+                                            && lst.get(i1) == l.get(i2)) {
+                                        eq = true;
+                                        break;
+                                    }
+                                }
+                                if(eq)break;
                             }
-                            if(!eq)
-                                list.add(l);
-                            l = new ArrayList<>();
+                            if(eq)break;
                         }
+                        if (!eq) list.add(l);
+                        l.clear();
                     }
                 }
             }
