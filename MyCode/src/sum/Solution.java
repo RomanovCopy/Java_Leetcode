@@ -27,28 +27,19 @@ public class Solution {
                 if (i == j) continue;
                 for (int k = 0; k < nums.length; k++) {
                     if (i == k || j == k) continue;
-                    if(nums[i]==-1 && nums[j]==0 && nums[k]==1)
-                        System.out.println("Es!!!");
                     if (nums[i] + nums[j] + nums[k] == 0) {
                         l.add(nums[i]);
                         l.add(nums[j]);
                         l.add(nums[k]);
                         boolean eq = false;
                         for (var lst : list) {
-                            for (int i1 = 0; i1 < lst.size(); i1++) {
-                                for (int i2 = 0; i2 < l.size(); i2++) {
-                                    if (lst.get(i1) == l.get(i2) && lst.get(i1) == l.get(i2)
-                                            && lst.get(i1) == l.get(i2)) {
-                                        eq = true;
-                                        break;
-                                    }
-                                }
-                                if(eq)break;
+                            if (lst.get(0).equals(l.get(0)) && lst.get(1).equals(l.get(1)) && lst.get(2).equals(l.get(2))) {
+                                eq = true;
+                                break;
                             }
-                            if(eq)break;
                         }
                         if (!eq) list.add(l);
-                        l.clear();
+                        l = new ArrayList<>();
                     }
                 }
             }
